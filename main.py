@@ -90,6 +90,7 @@ def ask_play_again():
 def play_game(name):
     my_wins = 0
     computer_wins = 0
+    
     records =[] # 승패 기록할 리스트
     #  둘 다 2승이 안됐을 때 다음 판을 진행
     while my_wins < GOAL_WINS and computer_wins < GOAL_WINS:
@@ -108,14 +109,24 @@ def play_game(name):
         show_score(name, my_wins, computer_wins)
     show_final_result(name, my_wins, computer_wins)
     show_records(records)
+    # 플레이어가 승리하면 True
+    return my_wins == GOAL_WINS
 
 #게임의 전체 루프
 def main():
     show_title()
     name = ask_name()
-    play_game(name)
+    # 연승 기록을 위한 변수
+    co_wins = 0
+    
     
     while True:
+        my_won = play_game(name)
+        if my_won:
+            co_wins += 1 # 연승 기록 누적
+            print(f"\n 현재 연승: {co_wins}연승")
+        else:
+            co_wins = 0 # 연승 기록 깨지면 초기화
         if not ask_play_again():
             break
     print("게임을 종료합니다.") 
