@@ -73,10 +73,18 @@ def show_records(recodes):
     # "1판 : 가위 vs 바위 => 패배"
     # "2판 : 가위 vs 바위 => 패배"
     # "3판 : 가위 vs 바위 => 패배"
-    for number, record in enumerate(recodes, start = 1):
+    for number, record in enumerate(recodes, start = 1): # enumerate()는 반복문에서 순서와 값을 동시에 가져오도록 도와주는 기능
         print(f"{number}판 : {record}")
     
-        
+# 게임 재시작 여부
+def ask_play_again():
+    while True:
+        answer = input("\n다시 도전 (yes/no) : ").strip().lower()
+        if answer == "yes" or answer == "y":
+            return True
+        if answer == "no" or answer == "n":
+            return False
+        pirnt("yes 또는 no 입력해주세요.")     
     
 # 3판 2선승제 게임 루프
 def play_game(name):
@@ -95,7 +103,7 @@ def play_game(name):
         elif result == "패배":
             computer_wins += 1
         #승패 결과 목록에 저장    
-        records.append(f"{HANDS[user_number]} vs {HAND[computer_number]} => {result}")
+        records.append(f"{HANDS[user_number]} vs {HANDS[computer_number]} => {result}")
         show_result(name, user_number, computer_number, result)
         show_score(name, my_wins, computer_wins)
     show_final_result(name, my_wins, computer_wins)
@@ -105,7 +113,12 @@ def play_game(name):
 def main():
     show_title()
     name = ask_name()
-    play_game(name) 
+    play_game(name)
+    
+    while True:
+        if not ask_play_again():
+            break
+    print("게임을 종료합니다.") 
     
 
 #게임 시작    
