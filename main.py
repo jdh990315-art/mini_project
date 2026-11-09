@@ -8,6 +8,7 @@ HANDS =  {1:"가위", 2:"바위", 3:"보"}
 # 게임의 종료 조건
 GOAL_WINS = 2
 
+
 # 게임타이틀 출력
 def show_title():
     print("="*40)
@@ -59,17 +60,29 @@ def show_score(name, my_wins, comeputer_wins):
 # 최종 결과 표시
 def show_final_result(name, my_wins, computer_wins):
     print("-"*40)
-    print("[최종 결과][{name}{my_wins} : {computer_wins} 컴퓨터")
+    print(f"[최종 결과]{name}{my_wins} : {computer_wins} 컴퓨터")
     if my_wins > computer_wins:
         print(f" ==> {name} 최종 승리!")
     else:
         print("==> 컴퓨터 승리!")
+        
+# 승패 판결 목록 표시
+
+def show_records(recodes):
+    print("\n[판별 승패 목록]")
+    # "1판 : 가위 vs 바위 => 패배"
+    # "2판 : 가위 vs 바위 => 패배"
+    # "3판 : 가위 vs 바위 => 패배"
+    for number, record in enumerate(recodes, start = 1):
+        print(f"{number}판 : {record}")
+    
         
     
 # 3판 2선승제 게임 루프
 def play_game(name):
     my_wins = 0
     computer_wins = 0
+    records =[] # 승패 기록할 리스트
     #  둘 다 2승이 안됐을 때 다음 판을 진행
     while my_wins < GOAL_WINS and computer_wins < GOAL_WINS:
         user_number = ask_number()
@@ -81,9 +94,12 @@ def play_game(name):
             my_wins += 1
         elif result == "패배":
             computer_wins += 1
+        #승패 결과 목록에 저장    
+        records.append(f"{HANDS[user_number]} vs {HAND[computer_number]} => {result}")
         show_result(name, user_number, computer_number, result)
         show_score(name, my_wins, computer_wins)
     show_final_result(name, my_wins, computer_wins)
+    show_records(records)
 
 #게임의 전체 루프
 def main():
